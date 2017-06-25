@@ -1,0 +1,29 @@
+<!-- Image processing node launcher -->
+
+<launch>
+    <arg name="img_pro"            default="img_pro" />
+    <arg name="image_in"           default="/camera/color/image_raw" />
+    <arg name="image_out"          default="image_out" />
+
+    <!--Image processing node-->
+    <node name="$(arg img_pro)"
+        pkg="$(arg img_pro)"
+        type="$(arg img_pro)"
+        output="screen"
+        args="1">
+        <remap from="/img_pro/image_in" to="$(arg image_in)"/>
+    </node>
+    
+    <!--Image window for output image -->
+    <node 
+        name="image_view_out" 
+        pkg="image_view" 
+        type="image_view" 
+        respawn="false" 
+        output="screen">
+        <remap from="image" to="/img_pro/$(arg image_out)"/>
+        <param name="autosize" value="true" />
+    </node>
+
+</launch>
+
